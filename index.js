@@ -1,4 +1,5 @@
 $(function() {
+	load_from_url_if_any();
 	$('#link-timestamp-today-utc').click(function() {
 		var now = moment.utc();
 		var value = now.format("YYYYMMDD");
@@ -12,12 +13,16 @@ $(function() {
 		} else {
 			show_steps();
 		}
+		return false;
 	});
 
 	function show_steps() {
 		$("#steps").empty();
+		var last_value;
 		step_1();
-		step_2();
+		last_value = step_2();
+		last_value = step_3(last_value);
+		last_value = step_4(last_value);
 	}
 
 	function step_1() {
@@ -25,6 +30,7 @@ $(function() {
 		var content = $("<div></div>").append($('#policy').val());
 		$("#steps").append(label);
 		$("#steps").append(content);
+		$("#steps").append("<br/>");
 	}
 
 	function step_2() {
@@ -35,6 +41,30 @@ $(function() {
 		var content = $("<div></div>").append(text);
 		$("#steps").append(label);
 		$("#steps").append(content);
+		$("#steps").append("<br/>");
+		return plaintext;
+	}
+
+	function step_3(last_value) {
+		var label = $("<div>Step 3</div>");
+		var value = $("#date-stamp").val();
+		value = CryptoJS.HmacSHA256(value, last_value);
+		var content = $("<div></div>").append(value.toString(CryptoJS.enc.Hex));
+		$("#steps").append(label);
+		$("#steps").append(content);
+		$("#steps").append("<br/>");
+		return value;
+	}
+
+	function step_4(last_value) {
+		var label = $("<div>Step 4</div>");
+		var value = $("#region").val();
+		value = CryptoJS.HmacSHA256(value, last_value);
+		var content = $("<div></div>").append(value.toString(CryptoJS.enc.Hex));
+		$("#steps").append(label);
+		$("#steps").append(content);
+		$("#steps").append("<br/>");
+		return value;
 	}
 
 	function validate() {
@@ -60,5 +90,9 @@ $(function() {
 	function display_error_messages(list) {
 		var message = list.join("\n");
 		alert(message);
+	}
+
+	function load_from_url_if_any() {
+		// TODO
 	}
 });
