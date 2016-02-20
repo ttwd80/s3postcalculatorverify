@@ -116,12 +116,12 @@
 		</div>
 
 		<div id="explanation-section" class="hidden">
-			<div class="step1">
+			<div class="step-1">
 				<div>Step 1</div>
 				<div>we start with the base64 encoding of the policy</div>
 				<div class="step1value"></div>
 			</div>
-			<div class="step2">
+			<div class="step-2">
 				<div>Step 2</div>
 				<div>Step 2 is not related to step 1</div>
 				<div>We join "AWS4" and the secret access key</div>
@@ -196,6 +196,45 @@
 					length of 32 bytes) and not the hex representation of the byte
 					array (twice as long, having a length of 64 characters).</div>
 				<div>The output will constantly be an array of 32 bytes.</div>
+			</div>
+			<div class="step-7">
+				<div>Step 7</div>
+				<div>Step 7 depends on both step 1 and step 6</div>
+				<div>HmacSHA256 function requires 2 parameters, one string as
+					the data, one byte array as the key</div>
+				<div>HmacSHA256 returns a byte array</div>
+				<div>we take the result from step 6 and use it as the key for
+					the HmacSHA256 function</div>
+				<div>we take the result from step 1 and use it as the data for
+					the HmacSHA256 function</div>
+				<div>
+					Input string for the message is [<span class="value"></span>]
+				</div>
+				<div>
+					It has a length of <span class="value-length"></span> characters.
+				</div>
+				<div>
+					Input byte array for the key is a byte array that has a length of <span
+						class="key-length"></span> bytes.
+				</div>
+				<div>
+					The hex representation of this byte array is [<span class="key-hex"></span>].
+				</div>
+				<div>
+					Do note that the key input parameter is the byte array (with the
+					length of <span class="key-length"></span> bytes) and not the hex
+					representation of the byte array (twice as long, having a length of
+					<span class="key-hex-length"></span> bytes).
+				</div>
+				<div>The output is a byte array of 32 bytes in length</div>
+				<div>The signature is the hex representation of the output.</div>
+				<div>
+					The signature has a length of <span class="result-hex-length"></span>
+					chracters.
+				</div>
+				<div>
+					The signature is [<span class="result-hex"></span>].
+				</div>
 			</div>
 		</div>
 	</div>

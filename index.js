@@ -54,94 +54,94 @@ $(function() {
 		step_7(last_value);
 
 		function step_1() {
-			$("#steps").append($("#explanation-section > .step1").clone());
-			$("#steps > .step1 > .step1value").text($('#policy').val());
+			$("#steps").append($("#explanation-section > .step-1").clone());
+			$("#steps > .step-1 > .step1value").text($('#policy').val());
 			$("#steps").append("<br/>");
 		}
 
 		function step_2() {
-			$("#steps").append($("#explanation-section > .step2").clone());
+			$("#steps").append($("#explanation-section > .step-2").clone());
 			$("#steps").append("<br/>");
 			var secret = $('#secret-access-key').val();
 			var value = "AWS4" + $('#secret-access-key').val();
-			$("#steps .step2 .step2secret").text(secret);
-			$("#steps .step2 .step2secretlength").text(secret.length);
-			$("#steps .step2 .step2value").text(value);
-			$("#steps .step2 .step2valuelength").text(value.length);
+			$("#steps .step-2 .step2secret").text(secret);
+			$("#steps .step-2 .step2secretlength").text(secret.length);
+			$("#steps .step-2 .step2value").text(value);
+			$("#steps .step-2 .step2valuelength").text(value.length);
 			$("#steps").append("<br/>");
 			return value;
 		}
 
 		function step_3(last_value) {
-			var array = CryptoJS.enc.Utf8.parse(last_value);
-			var hex_last_value = CryptoJS.enc.Hex.stringify(array);
-			var section = $("#explanation-section > .step-n").clone();
-			section.attr("class", "step-3");
+			var value = $('#date-stamp').val();
+			return step_n(last_value, 3, value);
+		}
+
+		function step_4(last_value) {
+			var value = $("#region").val();
+			return step_n(last_value, 4, value);
+		}
+
+		function step_5(last_value) {
+			var value = $("#service").val();
+			return step_n(last_value, 5, value);
+		}
+
+		function step_6(last_value) {
+			var value = 'aws4_request';
+			return step_n(last_value, 6, value);
+		}
+		function step_7(last_value) {
+			var value = $('#policy').val();
+			var section = $("#explanation-section > .step-7").clone();
+			var result = CryptoJS.HmacSHA256(value, last_value);
+			var key_length = last_value.sigBytes;
+			var hex_last_value = CryptoJS.enc.Hex.stringify(last_value);
+			var result_hex = result.toString(CryptoJS.enc.Hex);
 
 			$("#steps").append(section);
 			$("#steps").append("<br/>");
 
-			var value = $('#date-stamp').val();
-			var result = CryptoJS.HmacSHA256(value, last_value);
-
-			section.find(".n").text('3');
-			section.find(".n-minus-1").text('2');
-			section.find(".n-minus-1").text('2');
 			section.find(".value").text(value);
 			section.find(".value-length").text(value.length);
-			section.find(".key-length").text(last_value.length);
+			section.find(".key-length").text(key_length);
 			section.find(".key-hex").text(hex_last_value);
 			section.find(".key-hex-length").text(hex_last_value.length);
-			section.find(".result-hex").text(result.toString(CryptoJS.enc.Hex));
+			section.find(".result-hex").text(result_hex);
+			section.find(".result-hex-length").text(result_hex.length);
+		}
+
+		function step_n(last_value, n, value) {
+			var array;
+			var last_value_length;
+			if (typeof (last_value) == 'string') {
+				array = CryptoJS.enc.Utf8.parse(last_value);
+				last_value_length = last_value.length;
+			} else {
+				array = last_value;
+				last_value_length = last_value.sigBytes;
+			}
+			var hex_last_value = CryptoJS.enc.Hex.stringify(array);
+
+			var section = $("#explanation-section > .step-n").clone();
+			var result = CryptoJS.HmacSHA256(value, last_value);
+			var result_hex = result.toString(CryptoJS.enc.Hex);
+
+			section.attr("class", "step-" + n);
+
+			$("#steps").append(section);
+			$("#steps").append("<br/>");
+
+			section.find(".n").text(n);
+			section.find(".n-minus-1").text((n - 1));
+			section.find(".value").text(value);
+			section.find(".value-length").text(value.length);
+			section.find(".key-length").text(last_value_length);
+			section.find(".key-hex").text(hex_last_value);
+			section.find(".key-hex-length").text(hex_last_value.length);
+			section.find(".result-hex").text(result_hex);
 			return result;
 		}
-
-		function step_4(last_value) {
-			var label = $("<div>Step 4</div>");
-			var value = $("#region").val();
-			value = CryptoJS.HmacSHA256(value, last_value);
-			var content = $("<div></div>").append(
-					value.toString(CryptoJS.enc.Hex));
-			$("#steps").append(label);
-			$("#steps").append(content);
-			$("#steps").append("<br/>");
-			return value;
-		}
-
-		function step_5(last_value) {
-			var label = $("<div>Step 5</div>");
-			var value = $("#service").val();
-			value = CryptoJS.HmacSHA256(value, last_value);
-			var content = $("<div></div>").append(
-					value.toString(CryptoJS.enc.Hex));
-			$("#steps").append(label);
-			$("#steps").append(content);
-			$("#steps").append("<br/>");
-			return value;
-		}
-
-		function step_6(last_value) {
-			var label = $("<div>Step 6</div>");
-			var value = 'aws4_request';
-			value = CryptoJS.HmacSHA256(value, last_value);
-			var content = $("<div></div>").append(
-					value.toString(CryptoJS.enc.Hex));
-			$("#steps").append(label);
-			$("#steps").append(content);
-			$("#steps").append("<br/>");
-			return value;
-		}
-
-		function step_7(last_value) {
-			var label = $("<div>result</div>");
-			var value = $('#policy').val();
-			value = CryptoJS.HmacSHA256(value, last_value);
-			var hex_value = value.toString(CryptoJS.enc.Hex);
-			var content = $("<div></div>").append(hex_value);
-			$("#steps").append(label);
-			$("#steps").append(content);
-		}
-
 	}
 
 	function validate() {
