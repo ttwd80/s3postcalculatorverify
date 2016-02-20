@@ -1,5 +1,5 @@
 $(function() {
-	load_from_url_if_any();
+	init();
 	$('#link-timestamp-today-utc').click(function() {
 		var now = moment.utc();
 		var value = now.format("YYYYMMDD");
@@ -13,6 +13,11 @@ $(function() {
 		} else {
 			show_steps();
 		}
+		return false;
+	});
+
+	$('#show-hide-steps').click(function() {
+		$("#steps").toggle();
 		return false;
 	});
 
@@ -129,6 +134,20 @@ $(function() {
 	}
 
 	function load_from_url_if_any() {
-		// TODO
+		var params = $.deparam.querystring(true);
+		if (params['policy']) {
+			$('#policy').val(params['policy']);
+		}
+		if (params['datestamp']) {
+			$('#date-stamp').val(params['datestamp']);
+		}
+		if (params['region']) {
+			$('#region').val(params['region']);
+		}
+	}
+
+	function init() {
+		load_from_url_if_any();
+		$("#steps").hide();
 	}
 });
