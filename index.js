@@ -28,6 +28,7 @@ $(function() {
 		if ($('#service').val().length == 0) {
 			list.push('Region is empty.')
 		}
+		return list;
 	}
 
 	function display_error_messages(list) {
