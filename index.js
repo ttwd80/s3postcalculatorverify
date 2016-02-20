@@ -6,23 +6,26 @@ $(function() {
 		$('#date-stamp').val(value);
 	});
 
-	$('#button-calculate').click(
-			function() {
-				var errors = validate();
-				if (errors.length > 0) {
-					display_error_messages(errors);
-				} else {
-					var policy_in_base_64 = $('#policy').val();
-					var secret_key = $('#secret-access-key').val();
-					var date_stamp = $('#date-stamp').val();
-					var region = $('#region').val();
-					var service = $('#service').val()
-					calculate(policy_in_base_64, secret_key, date_stamp,
-							region, service);
-					show_steps();
-				}
-				return false;
-			});
+	$('#button-calculate').click(function() {
+		return button_calculate_click();
+	});
+
+	function button_calculate_click() {
+		var errors = validate();
+		if (errors.length > 0) {
+			display_error_messages(errors);
+		} else {
+			var policy_in_base_64 = $('#policy').val();
+			var secret_key = $('#secret-access-key').val();
+			var date_stamp = $('#date-stamp').val();
+			var region = $('#region').val();
+			var service = $('#service').val()
+			calculate(policy_in_base_64, secret_key, date_stamp, region,
+					service);
+			show_steps();
+		}
+		return false;
+	}
 
 	function calculate(policy_in_base_64, secret_key, date_stamp, region,
 			service) {
