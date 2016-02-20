@@ -35,8 +35,10 @@ $(function() {
 
 	function step_1() {
 		var label = $("<div>Step 1</div>");
+		var explanation = $("<div>we start with the base64 encoding of the policy</div>");
 		var content = $("<div></div>").append($('#policy').val());
 		$("#steps").append(label);
+		$("#steps").append(explanation);
 		$("#steps").append(content);
 		$("#steps").append("<br/>");
 	}
@@ -134,7 +136,7 @@ $(function() {
 	}
 
 	function load_from_url_if_any() {
-		var params = $.deparam.querystring(true);
+		var params = $.deserialize(location.search.substring(1));
 		if (params['policy']) {
 			$('#policy').val(params['policy']);
 		}
