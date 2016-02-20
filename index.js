@@ -148,6 +148,20 @@ $(function() {
 		var list = [];
 		if ($('#policy').val().length == 0) {
 			list.push('Policy is empty.')
+		} else {
+			try {
+				var value = $('#policy').val();
+				var words = CryptoJS.enc.Base64.parse(value);
+				var text = CryptoJS.enc.Utf8.stringify(words);
+				var wordArray = CryptoJS.enc.Utf8.parse(text);
+				var base64 = CryptoJS.enc.Base64.stringify(wordArray);
+				if (base64 != value) {
+					throw "not base 64";
+				}
+			} catch (e) {
+				list.push('Policy is not a valid base64 value.');
+			}
+
 		}
 		if ($('#secret-access-key').val().length == 0) {
 			list.push('Secret access key is empty.')
