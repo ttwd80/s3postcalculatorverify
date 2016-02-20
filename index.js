@@ -25,6 +25,7 @@ $(function() {
 		last_value = step_4(last_value);
 		last_value = step_5(last_value);
 		last_value = step_6(last_value);
+		step_7(last_value);
 	}
 
 	function step_1() {
@@ -89,6 +90,17 @@ $(function() {
 		$("#steps").append(content);
 		$("#steps").append("<br/>");
 		return value;
+	}
+
+	function step_7(last_value) {
+		var label = $("<div>result</div>");
+		var value = $('#policy').val();
+		value = CryptoJS.HmacSHA256(value, last_value);
+		var hex_value = value.toString(CryptoJS.enc.Hex);
+		var content = $("<div></div>").append(hex_value);
+		$("#steps").append(label);
+		$("#steps").append(content);
+		$("#result").val(hex_value);
 	}
 
 	function validate() {
