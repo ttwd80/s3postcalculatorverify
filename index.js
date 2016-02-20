@@ -54,81 +54,40 @@ $(function() {
 		step_7(last_value);
 
 		function step_1() {
-			var label = $("<div>Step 1</div>");
-			var explanation = $("<div>we start with the base64 encoding of the policy</div>");
-			var content = $("<div></div>").append($('#policy').val());
-			$("#steps").append(label);
-			$("#steps").append(explanation);
-			$("#steps").append(content);
+			$("#steps").append($("#explanation-section > .step1").clone());
+			$("#steps > .step1 > .step1value").text($('#policy').val());
 			$("#steps").append("<br/>");
 		}
 
 		function step_2() {
-			var label = $("<div>Step 2</div>");
-			var plaintext = "AWS4" + $("#secret-access-key").val();
-			var content = $("<div></div>").append(plaintext);
-			var explanation1 = $("<div></div>").append(
-					'Step 2 is not related to step 1');
-			var explanation2 = $("<div></div>").append(
-					'We join "AWS4" and the secret access key');
-			var explanation3 = $("<div></div>").append(
-					'In this example, the secret access key is ['
-							+ $("#secret-access-key").val() + ']');
-			var explanation4 = $("<div></div>").append(
-					'The joined string is [AWS4'
-							+ $("#secret-access-key").val() + ']');
-			var explanation5 = $("<div></div>")
-					.append(
-							'The output will always be 4 characters longer than the input.');
-			var explanation6 = $("<div></div>").append(
-					'The input is a string '
-							+ $("#secret-access-key").val().length
-							+ ' chacter(s) in length');
-			var explanation7 = $("<div></div>").append(
-					'The output is a string '
-							+ ($("#secret-access-key").val().length + 4)
-							+ ' chacters in length');
-			var explanation8 = $("<div></div>").append(
-					'The input for this step is ['
-							+ $("#secret-access-key").val() + ']');
-			var explanation9 = $("<div></div>").append(
-					'The output for this step is :');
-			$("#steps").append(label);
-			$("#steps").append(explanation1);
-			$("#steps").append(explanation2);
-			$("#steps").append(explanation3);
-			$("#steps").append(explanation4);
-			$("#steps").append(explanation5);
-			$("#steps").append(explanation6);
-			$("#steps").append(explanation7);
-			$("#steps").append(explanation8);
-			$("#steps").append(explanation9);
-			$("#steps").append(content);
+			$("#steps").append($("#explanation-section > .step2").clone());
 			$("#steps").append("<br/>");
-			return plaintext;
+			var secret = $('#secret-access-key').val();
+			var value = "AWS4" + $('#secret-access-key').val();
+			$("#steps .step2 .step2secret").text(secret);
+			$("#steps .step2 .step2secretlength").text(secret.length);
+			$("#steps .step2 .step2value").text(value);
+			$("#steps .step2 .step2valuelength").text(value.length);
+			$("#steps").append("<br/>");
+			return value;
 		}
 
 		function step_3(last_value) {
-			var label = $("<div>Step 3</div>");
-			var value = $("#date-stamp").val();
-			value = CryptoJS.HmacSHA256(value, last_value);
-			var content = $("<div></div>").append(
+			var array = CryptoJS.enc.Utf8.parse(last_value);
+			var hex_last_value = CryptoJS.enc.Hex.stringify(array);
+
+			$("#steps").append($("#explanation-section > .step3").clone());
+			$("#steps").append("<br/>");
+			var datestamp = $("#date-stamp").val();
+			var value = CryptoJS.HmacSHA256(datestamp, last_value);
+
+			$("#steps .step3 .step3datestamp").text(datestamp);
+			$("#steps .step3 .step3datestamplength").text(datestamp.length);
+			$("#steps .step3 .step2valuelength").text(last_value.length);
+			$("#steps .step3 .step2hex").text(hex_last_value)
+			$("#steps .step3 .step2hexvaluelength").text(hex_last_value.length);
+			$("#steps .step3 .step3hexvalue").text(
 					value.toString(CryptoJS.enc.Hex));
-			var explanation1 = $("<div></div>").append(
-					'Step 3 depends on step 2');
-			var explanation2 = $("<div></div>")
-					.append(
-							'we take the result from step 2 and use it as the key for the HmacSHA256 function');
-			var explanation3 = $("<div></div>")
-					.append(
-							'HmacSHA256 function requires 2 parameters, a key and a message');
-			var explanation4 = $("<div></div>").append(
-					'HmacSHA256 returns a byte array');
-			var explanation5 = $("<div></div>")
-					.append(
-							'In this case we will call the HmacSHA256 with [x] as the key and [y] as the message');
-			$("#steps").append(label);
-			$("#steps").append(content);
 			$("#steps").append("<br/>");
 			return value;
 		}

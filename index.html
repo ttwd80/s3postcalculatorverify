@@ -116,10 +116,78 @@
 		</div>
 
 		<div id="explanation-section" class="hidden">
-			<div class="step-1">
+			<div class="step1">
 				<div>Step 1</div>
 				<div>we start with the base64 encoding of the policy</div>
-				<div>{}</div>
+				<div class="step1value"></div>
+			</div>
+			<div class="step2">
+				<div>Step 2</div>
+				<div>Step 2 is not related to step 1</div>
+				<div>We join "AWS4" and the secret access key</div>
+				<div>
+					In this example, the secret access key is [<span
+						class="step2secret"></span>]
+				</div>
+				<div>
+					The joined string is [<span class="step2value"></span>]
+				</div>
+				<div>The output will always be 4 characters longer than the
+					input.</div>
+				<div>
+					The input is a string <span class="step2secretlength"></span>
+					chacter(s) in length
+				</div>
+				<div>
+					The output is a string <span class="step2valuelength"></span>
+					chacters in length
+				</div>
+				<div>
+					The input for this step is [<span class="step2secret"></span>]
+				</div>
+				<div>
+					The output for this step is [<span class="step2value"></span>]
+				</div>
+			</div>
+			<div class="step3">
+				<div>Step 3</div>
+				<div>Step 3 depends on step 2</div>
+				<div>we take the result from step 2 and use it as the key for
+					the HmacSHA256 function</div>
+				<div>HmacSHA256 function requires 2 parameters, one string as
+					the data, one byte array as the key</div>
+				<div>HmacSHA256 returns a byte array</div>
+				<div>In this case, we will call the HmacSHA256 function with
+					the date stamp as the message and the byte array from step 2 as as
+					the key.</div>
+				<div>
+					Input string for the message is [<span class="step3datestamp"></span>]
+				</div>
+				<div>
+					It has a length of <span class="step3datestamplength"></span>
+					characters.
+				</div>
+				<div>
+					Input byte array for the key is a byte array that has a length of <span
+						class="step2valuelength"></span> bytes.
+				</div>
+				<div>
+					The hex representation of this byte array is [<span class="step2hex"></span>].
+				</div>
+				<div>
+					Do note that the key input parameter is the byte array (with the
+					length of <span class="step2valuelength"></span> bytes) and not the
+					hex representation of the byte array (twice as long, having a
+					length of <span class="step2hexvaluelength"></span> bytes).
+				</div>
+				<div>The output is a byte array of 32 bytes in length</div>
+				<div>
+					The hex representation of the output is [<span class="step3hexvalue"></span>]
+				</div>
+				<div>Do note that output value is the byte array (with the
+					length of 32 bytes) and not the hex representation of the byte
+					array (twice as long, having a length of 64 characters).</div>
+				<div>The output will constantly be an array of 32 bytes.</div>
 			</div>
 		</div>
 	</div>
