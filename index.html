@@ -149,40 +149,48 @@
 					The output for this step is [<span class="step2value"></span>]
 				</div>
 			</div>
-			<div class="step3">
-				<div>Step 3</div>
-				<div>Step 3 depends on step 2</div>
-				<div>we take the result from step 2 and use it as the key for
-					the HmacSHA256 function</div>
+			<div class="step-n">
+				<div>
+					Step <span class="n"></span>
+				</div>
+				<div>
+					Step <span class="n"></span> depends on step <span
+						class="n-minus-1"></span>
+				</div>
+				<div>
+					we take the result from step <span class="n-minus-1"></span> and
+					use it as the key for the HmacSHA256 function
+				</div>
 				<div>HmacSHA256 function requires 2 parameters, one string as
 					the data, one byte array as the key</div>
 				<div>HmacSHA256 returns a byte array</div>
-				<div>In this case, we will call the HmacSHA256 function with
-					the date stamp as the message and the byte array from step 2 as as
-					the key.</div>
 				<div>
-					Input string for the message is [<span class="step3datestamp"></span>]
+					In this case, we will call the HmacSHA256 function with [<span
+						class="value"></span>] as the message and the byte array from step
+					<span class="n-minus-1"></span> as as the key.
 				</div>
 				<div>
-					It has a length of <span class="step3datestamplength"></span>
-					characters.
+					Input string for the message is [<span class="value"></span>]
+				</div>
+				<div>
+					It has a length of <span class="value-length"></span> characters.
 				</div>
 				<div>
 					Input byte array for the key is a byte array that has a length of <span
-						class="step2valuelength"></span> bytes.
+						class="key-length"></span> bytes.
 				</div>
 				<div>
-					The hex representation of this byte array is [<span class="step2hex"></span>].
+					The hex representation of this byte array is [<span class="key-hex"></span>].
 				</div>
 				<div>
 					Do note that the key input parameter is the byte array (with the
-					length of <span class="step2valuelength"></span> bytes) and not the
-					hex representation of the byte array (twice as long, having a
-					length of <span class="step2hexvaluelength"></span> bytes).
+					length of <span class="key-length"></span> bytes) and not the hex
+					representation of the byte array (twice as long, having a length of
+					<span class="key-hex-length"></span> bytes).
 				</div>
 				<div>The output is a byte array of 32 bytes in length</div>
 				<div>
-					The hex representation of the output is [<span class="step3hexvalue"></span>]
+					The hex representation of the output is [<span class="result-hex"></span>]
 				</div>
 				<div>Do note that output value is the byte array (with the
 					length of 32 bytes) and not the hex representation of the byte

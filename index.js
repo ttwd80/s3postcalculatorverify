@@ -75,21 +75,25 @@ $(function() {
 		function step_3(last_value) {
 			var array = CryptoJS.enc.Utf8.parse(last_value);
 			var hex_last_value = CryptoJS.enc.Hex.stringify(array);
+			var section = $("#explanation-section > .step-n").clone();
+			section.attr("class", "step-3");
 
-			$("#steps").append($("#explanation-section > .step3").clone());
+			$("#steps").append(section);
 			$("#steps").append("<br/>");
-			var datestamp = $("#date-stamp").val();
-			var value = CryptoJS.HmacSHA256(datestamp, last_value);
 
-			$("#steps .step3 .step3datestamp").text(datestamp);
-			$("#steps .step3 .step3datestamplength").text(datestamp.length);
-			$("#steps .step3 .step2valuelength").text(last_value.length);
-			$("#steps .step3 .step2hex").text(hex_last_value)
-			$("#steps .step3 .step2hexvaluelength").text(hex_last_value.length);
-			$("#steps .step3 .step3hexvalue").text(
-					value.toString(CryptoJS.enc.Hex));
-			$("#steps").append("<br/>");
-			return value;
+			var value = $('#date-stamp').val();
+			var result = CryptoJS.HmacSHA256(value, last_value);
+
+			section.find(".n").text('3');
+			section.find(".n-minus-1").text('2');
+			section.find(".n-minus-1").text('2');
+			section.find(".value").text(value);
+			section.find(".value-length").text(value.length);
+			section.find(".key-length").text(last_value.length);
+			section.find(".key-hex").text(hex_last_value);
+			section.find(".key-hex-length").text(hex_last_value.length);
+			section.find(".result-hex").text(result.toString(CryptoJS.enc.Hex));
+			return result;
 		}
 
 		function step_4(last_value) {
