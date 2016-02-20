@@ -24,6 +24,7 @@ $(function() {
 		last_value = step_3(last_value);
 		last_value = step_4(last_value);
 		last_value = step_5(last_value);
+		last_value = step_6(last_value);
 	}
 
 	function step_1() {
@@ -71,6 +72,17 @@ $(function() {
 	function step_5(last_value) {
 		var label = $("<div>Step 5</div>");
 		var value = $("#service").val();
+		value = CryptoJS.HmacSHA256(value, last_value);
+		var content = $("<div></div>").append(value.toString(CryptoJS.enc.Hex));
+		$("#steps").append(label);
+		$("#steps").append(content);
+		$("#steps").append("<br/>");
+		return value;
+	}
+
+	function step_6(last_value) {
+		var label = $("<div>Step 6</div>");
+		var value = 'aws4_request';
 		value = CryptoJS.HmacSHA256(value, last_value);
 		var content = $("<div></div>").append(value.toString(CryptoJS.enc.Hex));
 		$("#steps").append(label);
