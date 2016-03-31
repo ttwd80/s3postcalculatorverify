@@ -4,6 +4,7 @@ $(function() {
 		var now = moment.utc();
 		var value = now.format("YYYYMMDD");
 		$('#date-stamp').val(value);
+		return false;
 	});
 
 	$('#button-calculate').click(function() {
