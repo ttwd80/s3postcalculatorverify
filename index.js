@@ -12,7 +12,8 @@ $(function() {
 	});
 
 	function button_calculate_click() {
-		var errors = validate();
+		//var errors = validate();
+		var errors = [];
 		if (errors.length > 0) {
 			display_error_messages(errors);
 		} else {
